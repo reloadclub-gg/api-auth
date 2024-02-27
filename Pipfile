@@ -1,0 +1,23 @@
+[[source]]
+url = "http://devpi.reloadclub.gg:3141/root/reload"
+verify_ssl = false
+name = "reload-devpi"
+
+[packages]
+fastapi = "*"
+uvicorn = "*"
+redis = "*"
+pydantic-settings = "*"
+python-jose = {extras = ["cryptography"], version = "*"}
+reload-redis = "*"
+passlib = {extras = ["bcrypt"], version = "*"}
+
+[dev-packages]
+devpi = "*"
+
+[requires]
+python_version = "3.12"
+
+[scripts]
+start = "uvicorn app.main:application --host 0.0.0.0 --port 9000 --reload"
+lint = "flake8"

@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - PGUSER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - TZ=America/Sao_Paulo
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis
+    environment:
+      - TZ=America/Sao_Paulo
+
+  api:
+    build:
+      context: .
+      args:
+        DEVPI_HOST: ${DEVPI_HOST}
+        DEVPI_USER: ${DEVPI_USER}
+        DEVPI_PASSWORD: ${DEVPI_PASSWORD}
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    ports:
+      - 9000:9000
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    command: pipenv run start
+    restart: unless-stopped
+
+volumes:
+  db:
+    name: reload_auth_db
