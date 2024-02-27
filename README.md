@@ -1,6 +1,6 @@
 # reload-be-auth
 
-This repo contains all logic for reload authentication.
+This repo contains all logic for reload authentication. It exposes documentation about all endpoints and schemas at `/docs` and `/redoc`.
 
 ## Requirements
 
