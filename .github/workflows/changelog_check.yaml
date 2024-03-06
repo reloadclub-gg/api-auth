@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  changelog_check:
+  changelog:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
