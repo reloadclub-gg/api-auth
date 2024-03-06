@@ -6,19 +6,23 @@ ENV TZ="America/Sao_Paulo"
 ARG DEVPI_HOST
 ARG DEVPI_USER
 ARG DEVPI_PASSWORD
-ARG WORKDIR=/app
+ARG WORKDIR=/project
 
-WORKDIR $WORKDIR
+WORKDIR ${WORKDIR}
+COPY Pipfile Pipfile.lock ${WORKDIR}
+COPY .flake8 ${WORKDIR}
 
-RUN apt update && apt install -y gettext
-RUN pip install --upgrade pip pipenv
+RUN apt update
+
+RUN pip install --upgrade pip
+RUN pip install pipenv
+RUN pipenv install --dev --system --deploy
+
 RUN pip install devpi-client
 RUN devpi use $DEVPI_HOST
 RUN devpi login $DEVPI_USER --password=$DEVPI_PASSWORD
 
-COPY Pipfile Pipfile.lock $WORKDIR/
+EXPOSE 9000
 
-RUN pipenv install
-RUN pipenv sync -d
-
-ENTRYPOINT [ "pipenv", "run" ]
+ENTRYPOINT ["pipenv", "run"]
+CMD ["start"]

@@ -32,3 +32,23 @@ You will need to have a user on `reload-devpi` server. If you don't have one, as
 ### Installing libs
 
 To install libs, you need to run `pipenv install LIBRARY` and then run `make reset` so the app is rebuilt with the installed lib.
+
+### Docker image
+
+You can build and run the standalone docker image, but keep in mind that some stuff will not work well due to other images/services dependecies, like Redis. You'll get a better result using the docker-file and the instructions above.
+
+**_ONLY DO THIS IF YOU KNOW WHAT YOU'RE DOING!_**
+
+```bash
+docker build -t api-auth \
+  --build-arg="DEVPI_HOST=http://devpi.reloadclub.gg:3141/root/reload" \
+  --build-arg="DEVPI_USER=YOUR_DEVPI_USER" \
+  --build-arg="DEVPI_PASSWORD=YOUR_DEVPI_PASS" \
+  .
+
+# then run the image
+docker run --rm --env SECRET_KEY=PLACE_A_SECRET_KEY -p 9000:9000 -v ./app:/project/app api-auth
+
+# or with a specific command
+docker run --rm api-auth lint
+```
