@@ -1,15 +1,7 @@
 from fastapi import FastAPI
 
-from .models import AuthModel, ModelCreationForm
+from .tokens.api import endpoints as tokens_endpoints
+
 
 application = FastAPI()
-
-
-@application.get('/')
-async def detail(token: str):
-    return AuthModel.filter(token=token)
-
-
-@application.post('/')
-async def create(payload: ModelCreationForm) -> AuthModel:
-    return AuthModel.create(**payload.model_dump())
+application.include_router(tokens_endpoints.router)

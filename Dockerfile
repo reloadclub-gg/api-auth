@@ -18,6 +18,7 @@ RUN devpi login $DEVPI_USER --password=$DEVPI_PASSWORD
 
 COPY Pipfile Pipfile.lock $WORKDIR/
 
-RUN pipenv install --deploy
+RUN pipenv install
+RUN pipenv sync -d
 
 ENTRYPOINT [ "pipenv", "run" ]
