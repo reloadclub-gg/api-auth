@@ -1,5 +1,7 @@
 from fastapi.testclient import TestClient
+from jose import jwt
 
+from app.config import settings
 from app.main import application
 from app.tests import BaseTest
 from .. import models
@@ -50,22 +52,22 @@ class TestEndpoints(BaseTest):
         assert created.json().get('token_nonce') == response.json().get('nonce')
 
     def test_refresh_token_unauthorized(self):
-        response = client.patch(
+        r1 = client.patch(
                 '/',
                 headers={'Authorization': 'Bearer invalid'},
             )
-        assert response.status_code == 400
+        assert r1.status_code == 400
 
-        fake_token = (
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
-            'eyJ1c2VyX2lkIjoxLCJub25jZSI6MTM2Nzc2MjQyNDh9.'
-            '5WEaZ76aqCAXRA6BjNDtzSNVOy1kigaP-vIqKvaTyLo'
+        fake_token = jwt.encode(
+            {'user_id': 1, 'nonce': 12345},
+            settings.secret_key,
+            settings.tokens_algorithm,
         )
-        response = client.patch(
+        r2 = client.patch(
                 '/',
                 headers={'Authorization': f'Bearer {fake_token}'},
             )
-        assert response.status_code == 401
+        assert r2.status_code == 401
 
     def test_delete(self):
         created = client.post('/', json={'user_id': 1})
@@ -83,10 +85,10 @@ class TestEndpoints(BaseTest):
             )
         assert response.status_code == 400
 
-        fake_token = (
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
-            'eyJ1c2VyX2lkIjoxLCJub25jZSI6MTM2Nzc2MjQyNDh9.'
-            '5WEaZ76aqCAXRA6BjNDtzSNVOy1kigaP-vIqKvaTyLo'
+        fake_token = jwt.encode(
+            {'user_id': 1, 'nonce': 12345},
+            settings.secret_key,
+            settings.tokens_algorithm,
         )
         response = client.delete(
                 '/',

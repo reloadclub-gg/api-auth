@@ -11,6 +11,7 @@ halt:
 reset:
 	make down
 	docker-compose up -d --build
+	docker-compose logs api -f
 
 logs:
 	docker-compose logs api -f

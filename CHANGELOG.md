@@ -9,5 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Adiciona workflows do Github (`Changelog Check`, `Lint Check` e `Test Check`) [#3](https://github.com/reloadclub-gg/api-auth/issues/3).
 - Adiciona template para PRs do Github.
 - App `tokens` que gera, revoga e recupera `tokens` e `refresh_tokens` utilizando o conceito `JWT (JSON Web Tokens)` [#1](https://github.com/reloadclub-gg/api-auth/issues/1).
