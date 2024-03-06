@@ -5,6 +5,7 @@ class Settings(BaseSettings):
 
     # App
     secret_key: str
+    tokens_algorithm: str = 'HS256'
     debug: bool = True
     session_expire_hours: int = 30
 

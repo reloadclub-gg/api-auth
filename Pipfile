@@ -11,9 +11,14 @@ pydantic-settings = "*"
 python-jose = {extras = ["cryptography"], version = "*"}
 reload-redis = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
+starlette = "*"
 
 [dev-packages]
 devpi = "*"
+flake8 = "*"
+pytest = "*"
+coverage = "*"
+pytest-cov = "*"
 
 [requires]
 python_version = "3.12"
@@ -21,3 +26,5 @@ python_version = "3.12"
 [scripts]
 start = "uvicorn app.main:application --host 0.0.0.0 --port 9000 --reload"
 lint = "flake8"
+test = "pytest -s"
+coverage = "pytest --cov=app --cov-report term --cov-report html"

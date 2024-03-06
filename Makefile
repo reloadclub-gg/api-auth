@@ -1,5 +1,6 @@
 up:
 	docker-compose up -d
+	docker-compose logs api -f
 
 down:
 	docker-compose down -v
