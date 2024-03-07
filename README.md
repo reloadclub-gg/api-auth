@@ -11,7 +11,7 @@ This repo contains all logic for reload authentication. It exposes documentation
 
 You will need to accomplish 2 steps before running this project:
 
-1. Have a user on `reload-devpi` server and set the following envs on your terminal: `DEVPI_HOST`, `DEVPI_USER` and `DEVPI_PASSWORD`. If you don't have a `devapi` user, ask your manager to create one for you alongside the envvars.
+1. Have a user on `reload-devpi` server and set the following envs on your terminal: `DEVPI_HOST`, `DEVPI_USER` and `DEVPI_PASSWORD`. If you don't have a `devpi` user, ask your manager to create one for you alongside the envvars.
 2. Also, make a copy of `.env.tmpl` named `.env` and replace all aplicable envs.
 
 ### Install and configute reload-devpi server for private libs
