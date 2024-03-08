@@ -12,6 +12,7 @@ python-jose = {extras = ["cryptography"], version = "*"}
 reload-redis = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
 starlette = "*"
+requests = "*"
 
 [dev-packages]
 devpi = "*"

@@ -2,18 +2,18 @@ from pydantic import BaseModel
 
 
 class TokenSchema(BaseModel):
-    user_id: int
+    steamid: str
     token: str
 
 
 class TokenNonceSchema(BaseModel):
-    user_id: int
+    steamid: str
     token: str
     nonce: int
 
 
 class AuthSchema(BaseModel):
-    user_id: int
+    steamid: str
     token: str
     refresh_token: str
     token_nonce: int
@@ -21,4 +21,4 @@ class AuthSchema(BaseModel):
 
 
 class AuthFormSchema(BaseModel):
-    user_id: int
+    steamid: str

@@ -1,11 +1,12 @@
 from typing import Annotated
 
-from fastapi import Depends, APIRouter
+from fastapi import Depends, APIRouter, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 
+from app.config import settings
 from . import controllers, schemas
 
-router = APIRouter(tags=['tokens'])
+router = APIRouter(prefix='/tokens', tags=['tokens'])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
 
@@ -16,7 +17,10 @@ async def detail(token: Annotated[str, Depends(oauth2_scheme)]) -> schemas.Token
 
 @router.post('/')
 async def create(payload: schemas.AuthFormSchema) -> schemas.AuthSchema:
-    return await controllers.create_token(payload)
+    if settings.debug:
+        return await controllers.create_token(payload)
+
+    return HTTPException(status_code=404)
 
 
 @router.patch('/')

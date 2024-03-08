@@ -13,16 +13,16 @@ class BaseTokenModel(models.RedisBaseModel):
         EXPIRE_TIME = 7200  # 2h
         NONCE_ENCRYPT = 8
 
-    user_id: int
+    steamid: str
     token: str
     nonce: int
 
     @classmethod
-    def create(cls, user_id: int, **kwargs):
+    def create(cls, steamid: str, **kwargs):
         now = int(datetime.now().timestamp())
         nonce = now * cls.ConfigDict.NONCE_ENCRYPT
 
-        jwt_data = {'user_id': user_id, 'nonce': nonce}
+        jwt_data = {'steamid': steamid, 'nonce': nonce}
         try:
             jwt_token = jwt.encode(
                 jwt_data,
@@ -32,7 +32,7 @@ class BaseTokenModel(models.RedisBaseModel):
         except (JWTError, JWSError) as exc:
             raise exc
 
-        model = super().create(user_id=user_id, token=jwt_token, nonce=nonce, **kwargs)
+        model = super().create(steamid=steamid, token=jwt_token, nonce=nonce, **kwargs)
         cache.expire(model.cache_key, BaseTokenModel.ConfigDict.EXPIRE_TIME)
         return model
 
