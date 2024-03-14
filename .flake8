@@ -7,5 +7,5 @@ exclude =
     env,
     .env
 max-complexity = 10
-max-line-length = 120
+max-line-length = 100
 import-order-style = appnexus

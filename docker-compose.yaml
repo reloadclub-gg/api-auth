@@ -17,6 +17,7 @@ services:
       - .env
     volumes:
       - ./app:/project/app
+      - ./app/htmlcov:/project/app/htmlcov
     ports:
       - 9000:9000
     depends_on:

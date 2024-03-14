@@ -2,3 +2,5 @@
 .coverage
 htmlcov
 .pytest_cache
+*.code-workspace
+.vscode

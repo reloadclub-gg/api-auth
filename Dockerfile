@@ -9,8 +9,7 @@ ARG DEVPI_PASSWORD
 ARG WORKDIR=/project
 
 WORKDIR ${WORKDIR}
-COPY Pipfile Pipfile.lock ${WORKDIR}
-COPY .flake8 ${WORKDIR}
+COPY Pipfile Pipfile.lock .flake8 pyproject.toml ${WORKDIR}
 
 RUN apt update
 
