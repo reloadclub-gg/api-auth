@@ -1,5 +1,7 @@
 from datetime import datetime
-from reload_redis import redis_client_instance as cache, models
+
+from reload_redis import models
+from reload_redis import redis_client_instance as cache
 
 
 class Session(models.RedisBaseModel):

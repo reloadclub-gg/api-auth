@@ -1,5 +1,4 @@
 import pytest
-
 from reload_redis import redis_client_instance as cache
 
 

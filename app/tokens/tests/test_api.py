@@ -4,6 +4,7 @@ from jose import jwt
 from app.config import settings
 from app.main import application
 from app.tests import BaseTest
+
 from .. import models
 
 client = TestClient(application)
@@ -45,7 +46,7 @@ class TestEndpoints(BaseTest):
         created = client.post('/tokens', json={'steamid': 1})
         response = client.patch(
             '/',
-            headers={'Authorization': f'Bearer {created.json().get('refresh_token')}'},
+            headers={'Authorization': f'Bearer {created.json().get("refresh_token")}'},
         )
         assert created.json().get('steamid') == response.json().get('steamid')
         assert created.json().get('token') == response.json().get('token')
@@ -53,9 +54,9 @@ class TestEndpoints(BaseTest):
 
     def test_refresh_token_unauthorized(self):
         r1 = client.patch(
-                '/tokens',
-                headers={'Authorization': 'Bearer invalid'},
-            )
+            '/tokens',
+            headers={'Authorization': 'Bearer invalid'},
+        )
         assert r1.status_code == 400
 
         fake_token = jwt.encode(
@@ -64,25 +65,25 @@ class TestEndpoints(BaseTest):
             settings.tokens_algorithm,
         )
         r2 = client.patch(
-                '/tokens',
-                headers={'Authorization': f'Bearer {fake_token}'},
-            )
+            '/tokens',
+            headers={'Authorization': f'Bearer {fake_token}'},
+        )
         assert r2.status_code == 401
 
     def test_delete(self):
         created = client.post('/tokens', json={'steamid': 'steamid'})
         response = client.delete(
             '/tokens',
-            headers={'Authorization': f'Bearer {created.json().get('token')}'}
+            headers={'Authorization': f'Bearer {created.json().get("token")}'},
         )
         assert len(models.Token.filter(steamid=created.json().get('steamid'))) == 0
         assert response.json() is None
 
     def test_delete_unauthorized(self):
         response = client.delete(
-                '/tokens',
-                headers={'Authorization': 'Bearer invalid'},
-            )
+            '/tokens',
+            headers={'Authorization': 'Bearer invalid'},
+        )
         assert response.status_code == 400
 
         fake_token = jwt.encode(
@@ -91,7 +92,7 @@ class TestEndpoints(BaseTest):
             settings.tokens_algorithm,
         )
         response = client.delete(
-                '/tokens',
-                headers={'Authorization': f'Bearer {fake_token}'},
-            )
+            '/tokens',
+            headers={'Authorization': f'Bearer {fake_token}'},
+        )
         assert response.status_code == 401

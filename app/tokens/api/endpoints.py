@@ -1,9 +1,10 @@
 from typing import Annotated
 
-from fastapi import Depends, APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 
 from app.config import settings
+
 from . import controllers, schemas
 
 router = APIRouter(prefix='/tokens', tags=['tokens'])
@@ -24,9 +25,7 @@ async def create(payload: schemas.AuthFormSchema) -> schemas.AuthSchema:
 
 
 @router.patch('/')
-async def refresh(
-    rtoken: Annotated[str, Depends(oauth2_scheme)]
-) -> schemas.TokenNonceSchema:
+async def refresh(rtoken: Annotated[str, Depends(oauth2_scheme)]) -> schemas.TokenNonceSchema:
     return await controllers.refresh_token(rtoken)
 
 

@@ -1,6 +1,7 @@
 from reload_redis import redis_client_instance as cache
 
 from app.tests import BaseTest
+
 from .. import models
 
 

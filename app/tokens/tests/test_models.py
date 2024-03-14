@@ -1,10 +1,10 @@
 import pytest
-
-from reload_redis import redis_client_instance as cache
 from jose.exceptions import JWSError
+from reload_redis import redis_client_instance as cache
 
-from app.tests import BaseTest
 from app.config import settings
+from app.tests import BaseTest
+
 from .. import models
 
 

@@ -1,9 +1,10 @@
-from typing import Tuple, Any, List
+from typing import Any, List, Tuple
 
 from fastapi import HTTPException
-from jose import jwt, JWTError
+from jose import JWTError, jwt
 
 from app.config import settings
+
 from .. import models
 from . import schemas
 
@@ -50,7 +51,7 @@ async def _search_tokens(token: str, kind='token') -> Tuple[Any, List[models.Tok
 
 
 async def _create_new_tokens(steamid: str) -> Tuple[models.Token, models.RefreshToken]:
-    _delete_user_tokens(steamid)
+    await _delete_user_tokens(steamid)
     token = models.Token.create(steamid)
     rtoken = models.RefreshToken.create(steamid)
     return token, rtoken

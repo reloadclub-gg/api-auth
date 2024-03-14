@@ -1,8 +1,9 @@
 from datetime import datetime
 
-from reload_redis import redis_client_instance as cache, models
-from jose import jwt, JWTError
+from jose import JWTError, jwt
 from jose.exceptions import JWSError
+from reload_redis import models
+from reload_redis import redis_client_instance as cache
 
 from app.config import settings
 

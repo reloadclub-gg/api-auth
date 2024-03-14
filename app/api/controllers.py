@@ -1,14 +1,14 @@
-from typing import Dict, Any
+import urllib.parse
+from typing import Any, Dict
 
+import requests
 from fastapi import HTTPException
 from fastapi.responses import RedirectResponse
-import urllib.parse
-import requests
 
 from app.config import settings
-from app.tokens.api.schemas import AuthSchema
-from app.tokens.api.controllers import _create_new_tokens
 from app.sessions.models import Session
+from app.tokens.api.controllers import _create_new_tokens
+from app.tokens.api.schemas import AuthSchema
 
 
 async def _get_request_openid_params() -> Dict[str, Any]:
