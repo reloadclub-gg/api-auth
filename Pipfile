@@ -27,7 +27,7 @@ black = "*"
 python_version = "3.12"
 
 [scripts]
-start = "uvicorn app.main:application --host 0.0.0.0 --port 9000 --reload"
+start = "uvicorn app.main:application --host 0.0.0.0 --port $APP_PORT --reload"
 lint = "flake8"
 format = "bash -c 'black -S app && isort --overwrite-in-place app'"
 test = "pytest -s"
