@@ -16,7 +16,7 @@ async def detail(token: Annotated[str, Depends(oauth2_scheme)]) -> schemas.Token
     return await controllers.get_token(token)
 
 
-@router.post('/')
+@router.post('/', status_code=201)
 async def create(payload: schemas.AuthFormSchema) -> schemas.AuthSchema:
     if settings.debug:
         return await controllers.create_token(payload)

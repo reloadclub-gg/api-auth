@@ -14,11 +14,13 @@ class TestToken(BaseTest):
         assert model.token is not None
         assert model.nonce is not None
         assert model.steamid is not None
+        assert model.expire_at is not None
         model_hash = cache.hgetall(model.cache_key)
         assert model_hash is not None
         assert model.token == model_hash.get('token')
-        assert model.nonce == int(model_hash.get('nonce'))
+        assert model.nonce == float(model_hash.get('nonce'))
         assert model.steamid == model_hash.get('steamid')
+        assert model.expire_at == float(model_hash.get('expire_at'))
 
     def test_create_invalid_token(self):
         settings.tokens_algorithm = 'invalid'

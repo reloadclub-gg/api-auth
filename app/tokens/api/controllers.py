@@ -58,6 +58,7 @@ async def _create_new_tokens(steamid: str) -> Tuple[models.Token, models.Refresh
 
 
 async def create_token(payload: schemas.AuthFormSchema) -> schemas.AuthSchema:
+    print('create_token')
     # TODO check if user exists before create tokens
 
     token, rtoken = await _create_new_tokens(payload.steamid)
@@ -65,9 +66,11 @@ async def create_token(payload: schemas.AuthFormSchema) -> schemas.AuthSchema:
         {
             'steamid': token.steamid,
             'token': token.token,
-            'refresh_token': rtoken.token,
             'token_nonce': token.nonce,
+            'token_expire_at': token.expire_at,
+            'refresh_token': rtoken.token,
             'refresh_token_nonce': rtoken.nonce,
+            'refresh_token_expire_at': rtoken.expire_at,
         }
     )
 
@@ -85,8 +88,10 @@ async def get_token(token: str) -> models.Token:
 
 
 async def refresh_token(token: str) -> models.Token:
+    print('refresh_token')
     decoded, _ = await _search_tokens(token, kind='refresh')
     await _delete_actual_tokens(decoded.get('steamid'))
+    print(models.Token.filter())
     return models.Token.create(decoded.get('steamid'))
 
 
