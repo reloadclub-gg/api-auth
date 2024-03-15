@@ -10,6 +10,7 @@ ARG WORKDIR=/project
 
 WORKDIR ${WORKDIR}
 COPY Pipfile Pipfile.lock .flake8 pyproject.toml ${WORKDIR}
+COPY ./app ${WORKDIR}/app
 
 RUN apt update
 
